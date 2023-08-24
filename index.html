@@ -1,98 +1,56 @@
-<!DOCTYPE html>
-<html lang="tr">
+<!doctype html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/javascripttodolist/css/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
-      crossorigin="anonymous"
-    />
-    <title>Yapılacaklar Listesi</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>To-Do</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
   </head>
-  <body>
-    <div class="mr-1" style="position: relative">
-      <div style="position: absolute; top: 0; right: 0">
-        <div
-          id="liveToast"
-          class="toast success hide"
-          role="alert"
-          aria-live="assertive"
-          aria-atomic="true"
-          data-delay="4000"
-        >
-          <div>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="toast"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="toast-body">Listeye eklendi.</div>
-        </div>
+  <body onload="load()" style="background-color: #FFF5E0;">
+    <nav class="container-fluid d-flex align-items-center justify-content-around p-2" style="background-color: #141E46;">
+      <div class="col-1"></div>
+      <h3 class="col-10" style="color: #FFF5E0; text-align: center;">Yapılacaklar Listesi</h3>
+      <button class="btn col-1"><i class="fa-solid fa-circle-info fa-xl" style="color: #FFF5E0;"></i></button>
+    </nav>
+    <div class="card container mt-3 d-flex justify-content-center" style="background-color: #FF6969;">
+      <div class="row d-flex align-items-center justify-content-center">
+        <input id="input" class="col-7 m-4 p-1" type="text" placeholder="Yapılacak Ekleyin" style="background-color: #FFF5E0;">
+        <button id="liveToastBtn" onclick="ekle()" class="col-2 btn my-3" style="background-color: #BB2525; color: #FFF5E0; font-size: larger;">Ekle</button>
       </div>
-    </div>
-    <div class="mr-1" style="position: relative">
-      <div style="position: absolute; top: 0; right: 0">
-        <div
-          id="liveToast"
-          class="toast error hide"
-          role="alert"
-          aria-live="assertive"
-          aria-atomic="true"
-          data-delay="4000"
-        >
-          <div>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="toast"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="toast-body">Listeye boş ekleme yapamazsınız!</div>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="header">
-        <img
-          src="https://cdn.sanity.io/images/9kdepi1d/production/65c832d202a503b15d99e628f4313782f3ef50db-300x62.png"
-          class="mb-1"
-          alt=""
-        />
-        <h2>Yapılacaklar Listesi</h2>
-        <input type="text" id="task" placeholder="Bugün ne yapacaksın?" />
-        <span onclick="newElement()" id="liveToastBtn" class="button"
-          >Ekle</span
-        >
-      </div>
+      
 
-      <ul id="list">
-        <li>3 Litre Su İç</li>
-        <li>Ödevleri Yap</li>
-        <li>En Az 3 Saat Kodlama Yap</li>
-        <li>Yemek Yap</li>
-        <li>50 Sayfa Kitap Oku</li>
+      <ul class="mb-0">
+        <li  class="row border-top li">
+          <p id="0" onclick="ciz(this)" class="btn col-11 mb-0 p">Kitap Oku 1</p>
+          <button onclick=" this.parentElement.remove();
+          window.localStorage.removeItem(this.parentElement.childNodes[1].innerHTML);
+          console.log(localStorage);" class="btn col-1 bttn">X</button>
+        </li>
+        <li  class="row border-top li">
+          <p id="1" onclick="ciz(this)" class="btn col-11 mb-0 p">Kitap Oku 2</p>
+          <button onclick="this.parentElement.remove();
+          window.localStorage.removeItem(this.parentElement.childNodes[1].innerHTML);
+          console.log(localStorage);" class="btn col-1 bttn">X</button>
+        </li>
       </ul>
-      <script
-        src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"
-      ></script>
-      <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
-        crossorigin="anonymous"
-      ></script>
+
+      <!-- https://getbootstrap.com/docs/5.3/components/toasts/#basic -->
+      <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header">
+            <strong class="me-auto">Uyarı</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body">
+            Lütfen yapılacak girin ...
+          </div>
+        </div>
+      </div>
     </div>
+
+    <script src="toDo.js"></script>
+    <script src="https://kit.fontawesome.com/e828167a6f.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
   </body>
 </html>
